@@ -17,7 +17,7 @@ body
 	background-color: rgb(188,188,222);
 	background-image: url("monktiger.jpeg");
 	background-repeat: no-repeat;
-	background-position: bottom right;
+	background-position: top right;
 }
 
 .blink
