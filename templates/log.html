@@ -1,6 +1,20 @@
-{% extends "template.html"}
+{% extends "template.html" %}
 {% block content %}
 
+<h1>Login</h1>
 
+{% if error %}
+	<p class=error><strong>Error</strong> {{ error }}
+{% endif %}
+
+<form action="" method=post>
+<p>
+Username : <input type=text name=username value="{{ request.form.username }}">
+<br />
+password : <input type=password value=password>
+
+</p><input type=submit value=Login>
+</form>
+	</p>
 
 {% endblock %}
