@@ -24,7 +24,7 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=port)
         
 @app.route('/log', methods=['GET', 'POST'])
-def log()::
+def log():
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
