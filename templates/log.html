@@ -8,13 +8,20 @@
 {% endif %}
 
 <form action="" method=post>
-<p>
-Username : <input type=text name=username value="{{ request.form.username }}">
-<br />
-password : <input type=password name=password>
 
-</p><input type=submit value=Login>
-</form>
-	</p>
+	<dl>
+		<dt>Username : 
+		<dd><input type=text name=username value="{{ request.form.username }}">
 
+		<dt>password :
+		<dd><input type=password name=password>
+	</dl>
+	
+	<p><input type=submit value=Login>
+	</form>
+	{% for message in get_flashed_messages() %}
+	<div class=flash>
+		{{ message }}
+	</div>
+	{% endfor %}
 {% endblock %}
