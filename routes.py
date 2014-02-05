@@ -16,6 +16,11 @@ def page1():
 def page2():
         return render_template('page2.html')
     
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect (url_for('home'))
+    
 @app.route('/hello')
 def hello():
         return render_template('hello.html')
@@ -27,11 +32,12 @@ def log():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid Credentials. Please try again.'
         else:
+#             session['logged_in'] = True
             return redirect(url_for('hello'))
     return render_template('log.html', error=error)
     
 if __name__ == '__main__':
-	#Bind to PORT if defined, otherwise default to 5000
+#Bind to PORT if defined, otherwise default to 5000
         port = int(os.environ.get('PORT', 5000))
         app.run(host='0.0.0.0', port=port)
         
