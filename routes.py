@@ -1,14 +1,17 @@
 import os
 from flask import *
 from functools import wraps
+import sqlite3
 
 app = Flask(__name__)
+app.config.from_object(__name__)
 
 app.secret_key = 'my precious'
 
-@app.route('/')
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
 
-@app.route('/home')
+@app.route('/')
 def home():
         return render_template('home.html')
     
@@ -20,8 +23,15 @@ def page1():
 def page2():
         return render_template('page2.html')
     
-# def login_required(test):
-    
+def login_required(test):
+        @wraps(test)
+        def wrap(*args, **kwargs):
+            if 'logged_in' in session:
+                return test(*args, **kwargs)
+            else:
+                flash('You need to login first.')
+                return redirect(url_for('log'))
+        return wrap
 
 @app.route('/logout')
 def logout():
@@ -30,8 +40,13 @@ def logout():
     return redirect (url_for('log'))
     
 @app.route('/hello')
+@login_required
 def hello():
-        return render_template('hello.html')
+    g.db = connect_db()
+    cur = g.db.execute('select rep_name, amount from reps')
+    sales = [dict(rep_name=row[0], amount=row[1]) for row in cur.fetchall()]
+    g.db.close()   
+    return render_template('hello.html', sales=sales)
     
 @app.route('/log', methods=['GET', 'POST'])
 def log():

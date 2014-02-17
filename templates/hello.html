@@ -2,9 +2,15 @@
 {% block content %}
 
 	<h2> Welcome logged in</h2>
-	<br />
-	<br />
 	<a href="/logout">Logout</a>
+	<br />
+	<br />
+	
+	
+	<h3>Sales Data region 1</h3>
+	{% for item in sales %}
+	{{ item.rep_names }} {{ item.amount }}
+	
 
-
+{% endfor %}
 {% endblock %}
