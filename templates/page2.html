@@ -7,6 +7,11 @@
         
 		<p>first<br />
 		
+		<p>Data from database</p>
+		{% for item in sales %}
+		{{ item.rep_name }} {{ item.amount }} <br />
+		{% endfor %}
+		
 		</p>
 
         <p>link page1 :  <a href="/page1">here</a> to go to the page1 </p>

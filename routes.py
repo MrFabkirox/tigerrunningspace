@@ -3,6 +3,8 @@ from flask import *
 from functools import wraps
 import sqlite3
 
+DATABASE = 'sales.db'
+
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -21,7 +23,11 @@ def page1():
     
 @app.route('/page2')
 def page2():
-        return render_template('page2.html')
+        g.db = connect_db()
+        cur = g.db.execute('select rep_name, amount from reps')
+        sales = [dict(rep_name=row[0], amount=row[1]) for row in cur.fetchall()]
+        g.db.close()
+        return render_template('page2.html', sales=sales)
     
 def login_required(test):
         @wraps(test)
@@ -42,11 +48,8 @@ def logout():
 @app.route('/hello')
 @login_required
 def hello():
-    g.db = connect_db()
-    cur = g.db.execute('select rep_name, amount from reps')
-    sales = [dict(rep_name=row[0], amount=row[1]) for row in cur.fetchall()]
-    g.db.close()   
-    return render_template('hello.html', sales=sales)
+       
+    return render_template('hello.html')
     
 @app.route('/log', methods=['GET', 'POST'])
 def log():
