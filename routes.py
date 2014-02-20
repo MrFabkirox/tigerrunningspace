@@ -3,7 +3,10 @@ from flask import *
 from functools import wraps
 import sqlite3
 
-DATABASE = 'sales.db'
+# DATABASE = 'sales.db'
+# DATABASE = 'quotes.db'
+
+DATABASE = 'tiger.db'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -29,6 +32,14 @@ def page2():
         g.db.close()
         return render_template('page2.html', sales=sales)
     
+@app.route('/page3')
+def page3():
+        g.db = connect_db()
+        cur = g.db.execute('select strength, quote from quotes')
+        quotes = [dict(strength=row[0], quote=row[1]) for row in cur.fetchall()]
+        g.db.close()
+        return render_template('page3.html', quotes=quotes)
+    
 def login_required(test):
         @wraps(test)
         def wrap(*args, **kwargs):
@@ -45,7 +56,7 @@ def logout():
     flash('You were logged out')
     return redirect (url_for('log'))
     
-@app.route('/hello')
+@app.route('/delete/<int:task_id>',)
 @login_required
 def hello():
        

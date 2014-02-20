@@ -1,12 +1,9 @@
 {% extends "template.html" %}
 {% block content %}
 
+		<h3>page2</h3>
 		<h1>First</h1>
-        <h2>H2</h2>
-        <h3>page2</h3>
         
-		<p>first<br />
-		
 		<p>Data from database</p>
 		{% for item in sales %}
 		{{ item.rep_name }} {{ item.amount }} <br />
@@ -14,10 +11,13 @@
 		
 		</p>
 
-        <p>link page1 :  <a href="/page1">here</a> to go to the page1 </p>
-		<p>link page2 :  <a href="/page2">here</a> to go to the page2 </p>
-		<p>link template :  <a href="/">here</a> to go to the template default page </p>
-		
+        <ul>   
+        <li>link page1 :  <a href="/page1">here</a> to go to the page1 </li>
+		<li>link page2 :  <a href="/page2">here</a> to go to the page2 </li>
+		<li>link page3 :  <a href="/page3">here</a> to go to the page3 </li>
+		<li>link template :  <a href="/">here</a> to go to the template default page </li>
+        </ul>
+        
 		<hr />
 
 {% endblock %}

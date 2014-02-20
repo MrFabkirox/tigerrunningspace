@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+{% block content %}
+
+		<h3>page3</h3>
+		<h1>Quotes</h1>
+		
+		<!-- <form action="{{ url_for('new_task') }}" method=post class=new-task>
+		<td>
+		<label>Strength :</label>
+		<input name="strength" type="int" width="30px">
+		</td>
+		
+		<td>
+		<label>Quote :</label>
+		<input name="quote" type="text" width="300px">
+		</td>
+		</form>
+		
+		{% for o in open_tasks %}
+		<tr>
+		<td>{{ o.strength }}</td>
+		<td>{{ o.quote }}</td>
+		
+		<td>
+		<a href="{{ url_for('delete_entry', task_id = o.task_id) }}">Delete</a> - 
+		<a href="{{ url_for('complete', task_id = o.task_id) }}">Mark as Complete</a>
+		</td>
+		</tr>
+		{% endfor %}
+		
+		{% for c in closed_tasks %}
+		<tr>
+		<td>{{ c.strength }}</td>
+		<td>{{ c.quote }}</td>
+		
+		<td>
+		<a href="{{ url_for('delete_entry', task_id = c.task_id) }}">Delete</a> - 
+		<a href="{{ url_for('complete', task_id = c.task_id) }}">Mark as Complete</a>
+		</td>
+		</tr>
+		{% endfor %} -->
+				
+		<p>Data from quote database</p>
+		{% for item in quotes %}
+		{{ item.strength }} | {{ item.quote }} <br />
+		{% endfor %}
+
+        <ul>   
+        <li>link page1 :  <a href="/page1">here</a> to go to the page1 </li>
+		<li>link page2 :  <a href="/page2">here</a> to go to the page2 </li>
+		<li>link page3 :  <a href="/page3">here</a> to go to the page3 </li>
+		<li>link template :  <a href="/">here</a> to go to the template default page </li>
+        </ul>
+        
+
+{% endblock %}
