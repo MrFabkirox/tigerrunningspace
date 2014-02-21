@@ -31,14 +31,34 @@ def page2():
         sales = [dict(rep_name=row[0], amount=row[1]) for row in cur.fetchall()]
         g.db.close()
         return render_template('page2.html', sales=sales)
-    
+
 @app.route('/page3')
 def page3():
         g.db = connect_db()
         cur = g.db.execute('select strength, quote from quotes')
-        quotes = [dict(strength=row[0], quote=row[1]) for row in cur.fetchall()]
+        open_tasks = [dict(strength=row[0], quote=row[1])for row in cur.fetchall()]
         g.db.close()
-        return render_template('page3.html', quotes=quotes)
+        return render_template('page3.html', open_tasks=open_tasks)
+    
+@app.route('/page3')
+def new_task():
+        strength = request.form['strength']
+        quote = request.form['quote']
+    
+        g.db.execute('insert into quotes (strength, quote) values (?, ?)',
+        [request.form['strength'], request.form['quote']])
+        g.db.commit()
+        flash ('New entry was successfully posted')
+        return redirect(url_for ('page3'))
+
+@app.route('/compete/<int:task_id>',)
+def complete(task_id):
+        g.db = connect_db()
+        cur = g.db.execute('update quotes set status = 0 where task_id=' + str(task_id))
+        g.db.commit()
+        g.db.close()
+        flash('The task was marked as complete')
+        return redirect(url_for('page3'))
     
 def login_required(test):
         @wraps(test)

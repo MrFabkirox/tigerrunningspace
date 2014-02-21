@@ -11,6 +11,10 @@
             {% endblock %}
             <p>Work in construction</p>
             
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
+            
             <br />
             <a href="/log">Login</a>
             <br />
