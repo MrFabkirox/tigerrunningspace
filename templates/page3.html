@@ -5,49 +5,43 @@
 		<h1>Quotes</h1>
 		
 		<form action="{{ url_for('new_task') }}" method=post class=new-task>
-		<td>
-		<label>Strength :</label>
-		<input name="strength" type="int" width="30px">
-		</td>
-		
+				
 		<td>
 		<label>Quote :</label>
-		<input name="quote" type="text" width="300px">
+		<input name="quote" type="text" width="600px">
 		</td>
 		
 		<td>
 		<input class="button" type="submit" value="save">
 		</td>
 		</form>
-		
 		<br />
 		
+		<br />
+		open task<br />
 		{% for o in open_tasks %}
 		<tr>
-		<td>{{ o.strength }}</td>
 		<td>{{ o.quote }}</td>
-		<br />
+		<a href="{{ url_for('delete_entry', quote_id = o.quote_id) }}">Mark as delete</a> -
+		<a href="{{ url_for('complete', quote_id = o.quote_id) }}">Mark as complete</a>
 		</tr>
+		<br />
+		{% endfor %}
+		<br />
+		
+		<br />
+		closed task<br />
+		{% for c in closed_tasks %}
+		<tr>l
+		<td>{{ c.quote }}</td>
+		</tr>
+		
+		<br />
 		{% endfor %}
 		
-		<br />
-		url_for('complete', strength = o.strength) }}">Mark as Complete
-		
-		<!-- {% for c in closed_tasks %}
-		<tr>
-		<td>{{ c.strength }}</td>
-		<td>{{ c.quote }}</td>
-		
-		<td>
-		<a href="{{ url_for('delete_entry', task_id = c.task_id) }}">Delete</a> - 
-		<a href="{{ url_for('complete', task_id = c.task_id) }}">Mark as Complete</a>
-		</td>
-		</tr>
-		{% endfor %} -->
-				
 		<p>Data from quote database</p>
 		{% for item in quotes %}
-		{{ item.strength }} | {{ item.quote }} <br />
+		{{ item.quote_id }} | {{ item.quote }} <br />
 		{% endfor %}
 
         <ul>   

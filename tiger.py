@@ -1,10 +1,6 @@
 import sqlite3 as lite
 import sys
 
-quotes = (
-    (2, 'frog might not be bigger than the cow'),
-    (3, 'pink is blue'),
-)
 
 sales = (
     ('John', 22000),
@@ -19,8 +15,8 @@ with con:
     cur = con.cursor()
 
     cur.execute("DROP TABLE IF EXISTS quotes")
-    cur.execute("CREATE TABLE quotes(strength INTEGER, quote TEXT)")
-    cur.executemany("INSERT INTO quotes VALUES(?, ?)", quotes)
+    cur.execute("CREATE TABLE quotes(quote_id INTEGER PRIMARY KEY AUTOINCREMENT, quote TEXT, status INTEGER)")
+    cur.execute("INSERT INTO quotes (quote, status) VALUES('Pink is blue', 1)")
 
 
 with con:

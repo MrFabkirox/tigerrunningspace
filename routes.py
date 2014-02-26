@@ -33,28 +33,37 @@ def page2():
         return render_template('page2.html', sales=sales)
 
 @app.route('/page3')
-def page3():
+def page3():    
         g.db = connect_db()
-        cur = g.db.execute('select strength, quote from quotes')
-        open_tasks = [dict(strength=row[0], quote=row[1])for row in cur.fetchall()]
+        cur = g.db.execute('select quote_id, quote from quotes where status = 1')
+        open_tasks = [dict (quote_id=row[0], quote=row[1]) for row in cur.fetchall()]
+        cur = g.db.execute('select quote from quotes')
+        closed_tasks = [dict (quote=row[0]) for row in cur.fetchall()]
         g.db.close()
-        return render_template('page3.html', open_tasks=open_tasks)
-    
-@app.route('/page3')
+        return render_template('page3.html', open_tasks=open_tasks, closed_tasks=closed_tasks)
+
+@app.route('/new_task', methods=['POST'])
 def new_task():
-        strength = request.form['strength']
         quote = request.form['quote']
-    
-        g.db.execute('insert into quotes (strength, quote) values (?, ?)',
-        [request.form['strength'], request.form['quote']])
+        g.db = connect_db()
+        g.db.execute('insert into quotes (quote, status) values (?, 1)',[request.form['quote']])
         g.db.commit()
         flash ('New entry was successfully posted')
         return redirect(url_for ('page3'))
 
-@app.route('/compete/<int:task_id>',)
-def complete(task_id):
+@app.route('/delete/<int:quote_id>',)
+def delete_entry(quote_id):
         g.db = connect_db()
-        cur = g.db.execute('update quotes set status = 0 where task_id=' + str(task_id))
+        cur = g.db.execute('delete from quotes where quote_id='+str(quote_id))
+        g.db.commit()
+        g.db.close()
+        flash('New entry was marked as deleted')
+        return redirect(url_for('page3'))
+
+@app.route('/complete/<int:quote_id>',)
+def complete(quote_id):
+        g.db = connect_db()
+        cur = g.db.execute('update quotes set status = 0 where quote_id='+str(quote_id))
         g.db.commit()
         g.db.close()
         flash('The task was marked as complete')
@@ -76,7 +85,6 @@ def logout():
     flash('You were logged out')
     return redirect (url_for('log'))
     
-@app.route('/delete/<int:task_id>',)
 @login_required
 def hello():
        
@@ -95,7 +103,7 @@ def log():
     
 if __name__ == '__main__':
 #Bind to PORT if defined, otherwise default to 5000
-#         app.run(debug=True)
+        app.run(debug=True)
         port = int(os.environ.get('PORT', 5000))
         app.run(host='0.0.0.0', port=port)
         
