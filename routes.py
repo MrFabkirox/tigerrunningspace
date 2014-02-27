@@ -30,17 +30,18 @@ def page2():
         cur = g.db.execute('select rep_name, amount from reps')
         sales = [dict(rep_name=row[0], amount=row[1]) for row in cur.fetchall()]
         g.db.close()
+        flash('def page2')
         return render_template('page2.html', sales=sales)
 
 @app.route('/page3')
 def page3():    
         g.db = connect_db()
         cur = g.db.execute('select quote_id, quote from quotes where status = 1')
-        open_tasks = [dict (quote_id=row[0], quote=row[1]) for row in cur.fetchall()]
-        cur = g.db.execute('select quote from quotes')
-        closed_tasks = [dict (quote=row[0]) for row in cur.fetchall()]
+        new_quote = [dict (quote_id=row[0], quote=row[1]) for row in cur.fetchall()]
+        cur = g.db.execute('select quote_id, quote from quotes')
+        delete_quote = [dict (quote_id=row[0], quote=row[1]) for row in cur.fetchall()]
         g.db.close()
-        return render_template('page3.html', open_tasks=open_tasks, closed_tasks=closed_tasks)
+        return render_template('page3.html', new_quote=new_quote, delete_quote=delete_quote)
 
 @app.route('/new_task', methods=['POST'])
 def new_task():
@@ -57,7 +58,7 @@ def delete_entry(quote_id):
         cur = g.db.execute('delete from quotes where quote_id='+str(quote_id))
         g.db.commit()
         g.db.close()
-        flash('New entry was marked as deleted')
+        flash('The new entry was deleted')
         return redirect(url_for('page3'))
 
 @app.route('/complete/<int:quote_id>',)
@@ -66,7 +67,7 @@ def complete(quote_id):
         cur = g.db.execute('update quotes set status = 0 where quote_id='+str(quote_id))
         g.db.commit()
         g.db.close()
-        flash('The task was marked as complete')
+        flash('The post was validated')
         return redirect(url_for('page3'))
     
 def login_required(test):
@@ -103,7 +104,7 @@ def log():
     
 if __name__ == '__main__':
 #Bind to PORT if defined, otherwise default to 5000
-#         app.run(debug=True)
+        app.run(debug=True)
         port = int(os.environ.get('PORT', 5000))
         app.run(host='0.0.0.0', port=port)
         

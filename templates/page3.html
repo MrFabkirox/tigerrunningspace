@@ -4,8 +4,33 @@
 		<h3>page3</h3>
 		<h1>Quotes</h1>
 		
+		Highlighted Quote:<br />
+		
+		{% for d in delete_quote %}
+		<tr>
+		<a href="{{ url_for('delete_entry', quote_id = d.quote_id) }}">Delete</a> | 
+		<td>{{ d.quote_id }} |</td>
+		<td>{{ d.quote }}</td> 
+		</tr>		
+		<br />
+		{% endfor %}
+		
+		<br />
+		<br />
+		
+		Quote to submit: <br />
+		
+		{% for n in new_quote %}
+		<tr>
+		<td>{{ n.quote }}</td>
+		<a href="{{ url_for('delete_entry', quote_id = n.quote_id) }}">Delete</a> -
+		<a href="{{ url_for('complete', quote_id = n.quote_id) }}">Submit</a>
+		</tr>
+		<br />
+		{% endfor %}
+		<br />
+		
 		<form action="{{ url_for('new_task') }}" method=post class=new-task>
-				
 		<td>
 		<label>Quote :</label>
 		<input name="quote" type="text" width="600px">
@@ -15,35 +40,11 @@
 		<input class="button" type="submit" value="save">
 		</td>
 		</form>
-		<br />
 		
 		<br />
-		open task<br />
-		{% for o in open_tasks %}
-		<tr>
-		<td>{{ o.quote }}</td>
-		<a href="{{ url_for('delete_entry', quote_id = o.quote_id) }}">Mark as delete</a> -
-		<a href="{{ url_for('complete', quote_id = o.quote_id) }}">Mark as complete</a>
-		</tr>
-		<br />
-		{% endfor %}
-		<br />
 		
-		<br />
-		closed task<br />
-		{% for c in closed_tasks %}
-		<tr>l
-		<td>{{ c.quote }}</td>
-		</tr>
 		
-		<br />
-		{% endfor %}
 		
-		<p>Data from quote database</p>
-		{% for item in quotes %}
-		{{ item.quote_id }} | {{ item.quote }} <br />
-		{% endfor %}
-
         <ul>   
         <li>link page1 :  <a href="/page1">here</a> to go to the page1 </li>
 		<li>link page2 :  <a href="/page2">here</a> to go to the page2 </li>
