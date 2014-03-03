@@ -6,7 +6,18 @@
             <title>The Tiger Running Space</title>
         </head>
         <body>
-        	<a href="/">Python Rulz</a>
+        	
+			<nav id="menu">
+        		<ul>   
+        			<li><a href="/page1"> page1 </a></li>
+					<li><a href="/page2"> page2 </a></li>
+					<li><a href="/page3"> page3 </a></li>
+					<li><a href="/page4"> page4 </a></li>
+					<li><a href="/"> default </a></li>
+        		</ul>
+        	</nav>
+        	<br />
+        	
             {% block content %}
             {% endblock %}
             <p>Work in construction</p>
@@ -14,6 +25,10 @@
             {% for message in get_flashed_messages() %}
             {{ message }}
             {% endfor %}
+            
+            <br />
+            <br />
+            <a href="/">Python Rulz</a>
             
             <br />
             <a href="/log">Login</a>

@@ -31,3 +31,49 @@ body
 {
 	color : black;
 }
+
+#menu ul ul
+{
+	display: none;
+}
+
+#menu ul li:hover > ul {
+	display: block;
+}
+
+#menu ul {
+	background: #efefef;
+	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+	background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+	background: -webkit-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+	box-shadow: 0px 0px 9px rgba (0,0,0,0.15);
+	padding: 0 20px;
+	border-radius: 10px;
+	list-style: none;
+	position: relative;
+	display: inline-table;
+}
+
+#menu ul:after {
+	content:""; clear: both; display: block;
+}
+
+#menu ul li {
+	float: left;
+}
+
+#menu ul li:hover {
+	background: #4b545f;
+	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+	background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+	background: -webkit-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+}
+
+#menu ul li:hover a {
+	color: #fff;
+}
+
+#menu ul li a {
+	display: block; padding: 25px 40px;
+	color: #757575; text-decoration: none;
+}
